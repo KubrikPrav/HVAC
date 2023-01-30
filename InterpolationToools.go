@@ -59,6 +59,34 @@ func BiLinearInterpolation[T anyNum](targetX T, x1 T, x2 T, targetY T, y1 T, y2 
 	}
 }
 
+func FindBLI[T anyNum](targetX T, targetY T, sortedArray []T, ValueArray any, GetVAlue func(ValueArray any, X T, Y T) (Res T, err error)) (Result T, err error) {
+	var (
+		higherXid int
+		lowerXid  int
+		higherYid int
+		lowerYid  int
+	)
+	higherXid, lowerXid, err = SearchNearestId(targetX, &sortedArray)
+	if err != nil {
+		return 0, err
+	}
+	higherYid, lowerYid, err = SearchNearestId(targetY, &sortedArray)
+	if err != nil {
+		return 0, err
+	}
+	higherX := sortedArray[higherXid]
+	lowerX := sortedArray[lowerXid]
+	higherY := sortedArray[higherYid]
+	lowerY := sortedArray[lowerYid]
+	ValXlYl, err := GetVAlue(ValueArray, lowerX, lowerY)
+	ValXlYh, err := GetVAlue(ValueArray, lowerX, higherY)
+	ValXhYl, err := GetVAlue(ValueArray, higherX, lowerY)
+	ValXhYh, err := GetVAlue(ValueArray, higherX, higherY)
+
+	Result = BiLinearInterpolation(targetX, lowerX, higherX, targetY, lowerY, higherY, ValXlYl, ValXlYh, ValXhYl, ValXhYh)
+	return
+}
+
 // This function search for the nearest higher and lower values in low to high sorted array & return it's indexes
 func SearchNearestId[T anyNum](val T, arr *[]T) (int, int, error) {
 	var (
