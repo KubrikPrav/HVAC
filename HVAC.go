@@ -37,8 +37,8 @@ const (
 )
 
 // First is kg/h, second l/h
-func CoolingCondensationFlowrate(InputAirCondition airCondition, OutgoingTemperature float64, VolumetricFlowrate float64) (float64, float64) {
-	water_mass_flowrate := (InputAirCondition.Humidity - .95*VaporDensity(OutgoingTemperature)) * VolumetricFlowrate
+func CoolingCondensationFlowrate[T anyFloat](InletHumidity T, OutgoingTemperature T, VolumetricFlowrate T) (T, T) {
+	water_mass_flowrate := (InletHumidity - .95*VaporDensity(OutgoingTemperature)) * VolumetricFlowrate
 	if water_mass_flowrate < 0 {
 		water_mass_flowrate = 0
 	}
