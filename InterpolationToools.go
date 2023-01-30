@@ -46,7 +46,7 @@ func LinearInterpolation(target_x float64, x1 float64, x2 float64, val1 float64,
 }
 
 // This function search for the nearest higher and lower values in low to high sorted array & return it's indexes
-func searchNearestId(val float64, arr *[]float64) (int, int, error) {
+func SearchNearestId(val float64, arr *[]float64) (int, int, error) {
 	var (
 		lower_id  int
 		higher_id int
