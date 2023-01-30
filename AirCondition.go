@@ -28,8 +28,5 @@ func (s airCondition) HumidityRatio() float64 {
 }
 
 func (s airCondition) PartialPressure() float64 {
-	return PartialPressure(s.Temperature, s.HumidityRatio)
-}
-func (s airCondition) AbsHumidity() float64 {
-	return VaporDensity(s.Temperature) * s.HumidityRatio * 0.01
+	return PartialPressure(s.Temperature, s.HumidityRatio())
 }
