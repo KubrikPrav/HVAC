@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func HalfLengthValueSearcher[T anyFloat](Function func(T) T, Xmin T, Xmax T, TargetY T, Accuracy T) (T, error) {
+func HalfLengthValueSearcher[T anyNum](Function func(T) T, Xmin T, Xmax T, TargetY T, Accuracy T) (T, error) {
 
 	x_lower := Xmin
 	x_higher := Xmax
@@ -37,7 +37,7 @@ func Round[T anyFloat](DecimalPlaces int, x ...*T) {
 
 // Returns result of linear interpolation
 // f( x ) = a * x + b, f( x1 ) = val1, f( x2 ) = val2, f( target_x ) = result
-func LinearInterpolation(target_x float64, x1 float64, x2 float64, val1 float64, val2 float64) float64 {
+func LinearInterpolation[T anyNum](target_x T, x1 T, x2 T, val1 T, val2 T) T {
 	if x1 == x2 {
 		return val1
 	} else {
@@ -45,8 +45,22 @@ func LinearInterpolation(target_x float64, x1 float64, x2 float64, val1 float64,
 	}
 }
 
+func BiLinearInterpolation[T anyNum](targetX T, x1 T, x2 T, targetY T, y1 T, y2 T, valX1Y1 T, valX1Y2 T, valX2Y1 T, valX2Y2 T) T {
+	if x1 == x2 {
+		if y1 == y2 {
+			return valX1Y1
+		} else {
+			return LinearInterpolation(targetY, y1, y2, valX1Y1, valX1Y2)
+		}
+	} else if y1 == y2 {
+		return LinearInterpolation(targetX, x1, x2, valX1Y1, valX2Y1)
+	} else {
+		return LinearInterpolation(targetX, x1, x2, LinearInterpolation(targetY, y1, y2, valX1Y1, valX1Y2), LinearInterpolation(targetY, y1, y2, valX2Y1, valX2Y2))
+	}
+}
+
 // This function search for the nearest higher and lower values in low to high sorted array & return it's indexes
-func SearchNearestId(val float64, arr *[]float64) (int, int, error) {
+func SearchNearestId[T anyNum](val T, arr *[]T) (int, int, error) {
 	var (
 		lower_id  int
 		higher_id int
@@ -75,7 +89,7 @@ func SearchNearestId(val float64, arr *[]float64) (int, int, error) {
 }
 
 // Approximation by a 2nd order polynomial passing through zero
-func ZeroParabolicApproximator(x1 float64, x2 float64, val1 float64, val2 float64, target_x float64) (float64, error) {
+func ZeroParabolicApproximator[T anyNum](x1 T, x2 T, val1 T, val2 T, target_x T) (T, error) {
 	if x1 == 0 || x2 == 0 || x1 == x2 {
 		return 0, errors.New("divide dy zero")
 	}
