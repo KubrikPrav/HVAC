@@ -90,7 +90,7 @@ func AirHeatPower[T anyFloat](InletTemperature /* ºC */ T, Humidity /* g/kg */ 
 // InletTemperature - ºC
 // Humidity - g/kg
 func AirHeatOutgoingTemperature[T anyFloat](HeatingPower /* kW */ T, VolumetricFlowrate /* m3/h */ T, InletTemperature /* ºC */ T, Humidity /* g/kg */ T) (OutgoingTemperature /* ºC */ T) {
-	return HeatingPower / (VolumetricFlowrate * (AirDensity(InletTemperature) * (DryAirHeatCapacity + Humidity*WaterSteamHeatCapacity)) / SecondsInHour)
+	return HeatingPower/(VolumetricFlowrate*(AirDensity(InletTemperature)*(DryAirHeatCapacity+Humidity*WaterSteamHeatCapacity))/SecondsInHour) + InletTemperature
 }
 
 // Returns the power that the water flow (Q) gives off when cooled from InletTemperature to OutgoingTemperature

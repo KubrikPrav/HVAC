@@ -3,14 +3,14 @@ package HVAC
 import "math"
 
 type (
-	noise [8]float32
+	Noise [8]float32
 )
 
-func (s noise) TotalNoise() float32 {
+func (s Noise) TotalNoise() float32 {
 	return logNoiseCounter(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7])
 }
 
-func AddNoise(in ...noise) (out noise) {
+func AddNoise(in ...Noise) (out Noise) {
 	var temp [8][]float32
 	for i := 0; i < 8; i++ {
 		temp[i] = make([]float32, len(in))
