@@ -1,7 +1,7 @@
 package HVAC
 
 type (
-	extra struct {
+	Extra struct {
 		HeatedWaterInletTemperature     float64
 		HeatedWaterOutgoingTemperature  float64
 		ChilledWaterInletTemperature    float64
@@ -13,7 +13,7 @@ type (
 	}
 	RequestType1 struct {
 		Types map[string]HeaterTask2
-		Extra extra
+		Extra Extra
 	}
 	ResponseType1 map[string]RespT1struct
 
