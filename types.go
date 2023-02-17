@@ -44,6 +44,7 @@ type (
 		Winter FilterDescription
 	}
 	FilterDescription struct {
+		Flowrate     float64
 		PressureDrop float64
 		Class        string
 		SizeAndQty   []struct {
@@ -64,6 +65,7 @@ type (
 	}
 	BlowerResp struct {
 		Summer struct {
+			OperatingPoint BlowerOperatingPoint
 			InletNoise     Noise
 			OutgoingNoise  Noise
 			Efficiency     float64
@@ -71,6 +73,7 @@ type (
 			Speed          float64
 		}
 		Winter struct {
+			OperatingPoint BlowerOperatingPoint
 			InletNoise     Noise
 			OutgoingNoise  Noise
 			Efficiency     float64
@@ -98,8 +101,10 @@ type (
 		VolumetricFlowrate uint64
 	}
 	HeaterResult struct {
+		Inlet                   Air
 		Outgoing                Air
 		PressureDrop            float64
+		VolumetricFlowrate      float64
 		Capacity                float64 // max available power
 		Power                   float64
 		WaterVolumetricFlowrate float64
