@@ -11,11 +11,70 @@ type (
 		CoolerAntifreezeId              uint64
 		CoolerAntifreezeQty             uint64
 	}
+	SeasonInitData struct {
+		Outdoor                   Air
+		Indoor                    Air
+		SupplyTarget              Air
+		SupplyVolumetricFlowrate  uint64
+		SupplyPressure            uint64
+		ExhaustVolumetricFlowrate uint64
+		ExhaustPressure           uint64
+	}
+	UnitTask struct {
+		Summer                      SeasonInitData
+		Winter                      SeasonInitData
+		SupplyBlowerEfficiencyClass string
+		MaxInsideNoise              uint64
+		MaxOutsideNoise             uint64
+		SectionList                 struct {
+			ElectricHeater      bool
+			WaterHeater         bool
+			DirectExpansion     bool
+			WaterCooler         bool
+			SteamHumidifier     bool
+			MediaHumidifier     bool
+			SupplyFilterClasses []uint8
+		}
+		Extra struct {
+			HeatedWaterInletTemperature     float64
+			HeatedWaterOutgoingTemperature  float64
+			ChilledWaterInletTemperature    float64
+			ChilledWaterOutgoingTemperature float64
+			HeaterAntifreezeId              uint64
+			HeaterAntifreezeQty             uint64
+			CoolerAntifreezeId              uint64
+			CoolerAntifreezeQty             uint64
+		}
+	}
+	UnitDescription struct {
+		IsHeatedWaterPreHeater    bool
+		IsElectricHeaterPreHeater bool
+		IsHeatedWater             bool
+		IsElectricHeater          bool
+		IsChilledWater            bool
+		IsDirectExpansion         bool
+		IsMediaHumidifier         bool
+		IsSteamHumidifier         bool
+		IsSoundModerator          bool
+		IsFilter                  bool
+		IsThermalWheel            bool
+		IsPlateHeatExchanger      bool
+		Name                      string
+		Plot                      string
+		Drawing                   string
+		PreHeater                 HeaterResult2
+		Heater                    HeaterResult2
+		Cooler                    HeaterResult2
+		Humidifier                HeaterResult2
+		SoundModerator            SoundModeratorArray
+		Filter                    []FilterDescription2
+		Blower                    BlowerResp
+	}
 	RequestType1 struct {
 		Types map[string]HeaterTask2
 		Extra Extra
 	}
-	ResponseType1 map[string]RespT1struct
+	ResponseType1 map[string]HeaterResult2
 
 	RequestType2  map[string]Flowrate2
 	ResponseType2 map[string][]FilterDescription2
@@ -30,7 +89,7 @@ type (
 		Summer HeaterTask
 		Winter HeaterTask
 	}
-	RespT1struct struct {
+	HeaterResult2 struct {
 		Summer HeaterResult
 		Winter HeaterResult
 	}
