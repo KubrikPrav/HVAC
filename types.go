@@ -77,6 +77,7 @@ type (
 		SupplyBlower              BlowerResp
 		ExhaustFilter             []FilterDescription2
 		ExhaustBlower             BlowerResp
+		Extra                     Extra
 	}
 	RequestType1 struct {
 		Types map[string]HeaterTask2
