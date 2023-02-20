@@ -7,7 +7,16 @@ type (
 )
 
 func (s Noise) TotalNoise() float32 {
-	return logNoiseCounter(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7])
+	var isZero bool
+	for i := 0; i < 8; i++ {
+		isZero = isZero || s[i] <= .01
+	}
+	if isZero {
+		return 0
+	} else {
+		return logNoiseCounter(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7])
+	}
+
 }
 
 func AddNoise(in ...Noise) (out Noise) {
