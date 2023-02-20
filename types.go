@@ -27,13 +27,16 @@ type (
 		MaxInsideNoise              uint64
 		MaxOutsideNoise             uint64
 		SectionList                 struct {
+			SupplyLine          bool
+			ExhaustLine         bool
 			ElectricHeater      bool
-			WaterHeater         bool
+			HeatedWater         bool
 			DirectExpansion     bool
-			WaterCooler         bool
+			ChilledWater        bool
 			SteamHumidifier     bool
 			MediaHumidifier     bool
 			SupplyFilterClasses []uint8
+			ExhaustFilterClass  []uint8
 		}
 		Extra struct {
 			HeatedWaterInletTemperature     float64
