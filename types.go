@@ -56,9 +56,12 @@ type (
 		IsMediaHumidifier         bool
 		IsSteamHumidifier         bool
 		IsSoundModerator          bool
-		IsFilter                  bool
+		IsSupplyFilter            bool
+		IsExhaustFilter           bool
 		IsThermalWheel            bool
 		IsPlateHeatExchanger      bool
+		IsSupplyBlower            bool
+		IsExhaustBlower           bool
 		Name                      string
 		Plot                      string
 		Drawing                   string
@@ -67,8 +70,10 @@ type (
 		Cooler                    HeaterResult2
 		Humidifier                HeaterResult2
 		SoundModerator            SoundModeratorArray
-		Filter                    []FilterDescription2
-		Blower                    BlowerResp
+		SupplyFilter              []FilterDescription2
+		SupplyBlower              BlowerResp
+		ExhaustFilter             []FilterDescription2
+		ExhaustBlower             BlowerResp
 	}
 	RequestType1 struct {
 		Types map[string]HeaterTask2
