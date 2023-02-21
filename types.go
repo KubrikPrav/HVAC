@@ -20,25 +20,27 @@ type (
 		ExhaustVolumetricFlowrate uint64
 		ExhaustPressure           uint64
 	}
+	RequiredComponents struct {
+		SupplyLine          bool
+		ExhaustLine         bool
+		ElectricHeater      bool
+		HeatedWater         bool
+		DirectExpansion     bool
+		ChilledWater        bool
+		SteamHumidifier     bool
+		MediaHumidifier     bool
+		Dryer               bool
+		SupplyFilterClasses []uint8
+		ExhaustFilterClass  []uint8
+	}
 	UnitTask struct {
 		Summer                      SeasonInitData
 		Winter                      SeasonInitData
 		SupplyBlowerEfficiencyClass string
 		MaxInsideNoise              uint64
 		MaxOutsideNoise             uint64
-		SectionList                 struct {
-			SupplyLine          bool
-			ExhaustLine         bool
-			ElectricHeater      bool
-			HeatedWater         bool
-			DirectExpansion     bool
-			ChilledWater        bool
-			SteamHumidifier     bool
-			MediaHumidifier     bool
-			SupplyFilterClasses []uint8
-			ExhaustFilterClass  []uint8
-		}
-		Extra struct {
+		SectionList                 RequiredComponents
+		Extra                       struct {
 			HeatedWaterInletTemperature     float64
 			HeatedWaterOutgoingTemperature  float64
 			ChilledWaterInletTemperature    float64
