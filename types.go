@@ -96,6 +96,39 @@ type (
 	RequestType4  map[string]SoundModeratorTask2
 	ResponseType4 map[string]SoundModeratorArray
 
+	RequestType5 struct {
+		Task  HeatRecoveryTask2
+		Names []string
+	}
+	ResponseType5 map[string]HeatRecoveryResult2
+
+	HeatRecoveryTask struct {
+		Inside                    Air
+		Outside                   Air
+		SupplyVolumetricFlowrate  uint64
+		ExhaustVolumetricFlowrate uint64
+	}
+	HeatRecoveryResult struct {
+		Supply                Air
+		Exhaust               Air
+		Inside                Air
+		Outside               Air
+		PreHeaterPwr          float64
+		SupplyPressureDrop    float64
+		ExhaustPressureDrop   float64
+		TemperatureEfficiency float64
+		HumidityEfficiency    float64
+		Freeze                bool
+	}
+	HeatRecoveryTask2 struct {
+		Summer HeatRecoveryTask
+		Winter HeatRecoveryTask
+	}
+	HeatRecoveryResult2 struct {
+		Summer HeatRecoveryResult
+		Winter HeatRecoveryResult
+	}
+
 	HeaterTask2 struct {
 		Summer HeaterTask
 		Winter HeaterTask
