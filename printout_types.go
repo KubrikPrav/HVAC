@@ -190,7 +190,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 	return HeatRecoveryPrint{
 		ShortName: s.ShortName,
 		LongName:  s.LongName,
-		Winter: struct {
+		Summer: struct {
 			Used                  bool
 			Supply                PrintAir
 			Exhaust               PrintAir
@@ -211,7 +211,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			TemperatureEfficiency: round(s.Summer.TemperatureEfficiency, digits),
 			HumidityEfficiency:    round(s.Summer.HumidityEfficiency, digits),
 		},
-		Summer: struct {
+		Winter: struct {
 			Used                  bool
 			Supply                PrintAir
 			Exhaust               PrintAir
