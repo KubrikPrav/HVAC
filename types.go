@@ -82,6 +82,14 @@ type (
 		ExhaustFilter             []FilterDescription2
 		ExhaustBlower             BlowerResp
 		Extra                     Extra
+		TotalNoise                struct {
+			Inside       Noise
+			Outside      Noise
+			Body         Noise
+			InsideTotal  float64
+			OutsideTotal float64
+			BodyTotal    float64
+		}
 	}
 	RequestType1 struct {
 		Types map[string]HeaterTask2

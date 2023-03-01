@@ -36,6 +36,14 @@ type (
 		ExhaustFilter             []FilterPrint
 		ExhaustBlower             BlowerResp
 		Extra                     Extra
+		TotalNoise                struct {
+			Inside       Noise
+			Outside      Noise
+			Body         Noise
+			InsideTotal  float64
+			OutsideTotal float64
+			BodyTotal    float64
+		}
 	}
 
 	FilterPrint struct {
@@ -310,5 +318,20 @@ func (s UnitDescription) Print(digits int) UnitPrintout {
 		ExhaustFilter:             printFilters(s.ExhaustFilter, digits),
 		ExhaustBlower:             s.ExhaustBlower,
 		Extra:                     s.Extra,
+		TotalNoise: struct {
+			Inside       Noise
+			Outside      Noise
+			Body         Noise
+			InsideTotal  float64
+			OutsideTotal float64
+			BodyTotal    float64
+		}{
+			Inside:       s.TotalNoise.Inside.Round(digits),
+			Outside:      s.TotalNoise.Outside.Round(digits),
+			Body:         s.TotalNoise.Body.Round(digits),
+			InsideTotal:  round(s.TotalNoise.InsideTotal, digits),
+			OutsideTotal: round(s.TotalNoise.OutsideTotal, digits),
+			BodyTotal:    round(s.TotalNoise.BodyTotal, digits),
+		},
 	}
 }
