@@ -2,7 +2,6 @@ package HVAC
 
 import (
 	"errors"
-	"math"
 )
 
 type Air struct {
@@ -12,16 +11,6 @@ type Air struct {
 type PrintAir struct {
 	Temperature   float64
 	HumidityRatio float64
-}
-
-func (s *PrintAir) Air() (out Air) {
-	out.Temperature = s.Temperature
-	out.SetHumidityRatio(s.HumidityRatio)
-	return
-}
-
-func (s *Air) PrintAir(digits int) (out PrintAir) {
-	return PrintAir{math.Round(s.Temperature*math.Pow10(digits)) / math.Pow10(digits), math.Round(s.HumidityRatio()*math.Pow10(digits)) / math.Pow10(digits)}
 }
 
 func (s *Air) VapourPressure() float64 {

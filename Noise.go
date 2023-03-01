@@ -6,6 +6,19 @@ type (
 	Noise [8]float32
 )
 
+func (s Noise) Round(digits int) Noise {
+	return Noise{
+		float32(round(float64(s[0]), digits)),
+		float32(round(float64(s[1]), digits)),
+		float32(round(float64(s[2]), digits)),
+		float32(round(float64(s[3]), digits)),
+		float32(round(float64(s[4]), digits)),
+		float32(round(float64(s[5]), digits)),
+		float32(round(float64(s[6]), digits)),
+		float32(round(float64(s[7]), digits)),
+	}
+}
+
 func (s Noise) TotalNoise() float32 {
 	var isZero bool
 	for i := 0; i < 8; i++ {

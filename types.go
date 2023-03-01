@@ -70,6 +70,8 @@ type (
 		Name                      string
 		Plot                      string
 		Drawing                   string
+		Price                     float64
+		HeatRecovery              HeatRecoveryResult2
 		PreHeater                 HeaterResult2
 		Heater                    HeaterResult2
 		Cooler                    HeaterResult2
@@ -108,6 +110,7 @@ type (
 		SupplyVolumetricFlowrate  uint64
 		ExhaustVolumetricFlowrate uint64
 	}
+
 	HeatRecoveryResult struct {
 		Supply                Air
 		Exhaust               Air
@@ -125,17 +128,22 @@ type (
 		Winter HeatRecoveryTask
 	}
 	HeatRecoveryResult2 struct {
-		Summer HeatRecoveryResult
-		Winter HeatRecoveryResult
+		LongName  string
+		ShortName string
+		Summer    HeatRecoveryResult
+		Winter    HeatRecoveryResult
 	}
 
 	HeaterTask2 struct {
+		Name   string
 		Summer HeaterTask
 		Winter HeaterTask
 	}
 	HeaterResult2 struct {
-		Summer HeaterResult
-		Winter HeaterResult
+		LongName  string
+		ShortName string
+		Summer    HeaterResult
+		Winter    HeaterResult
 	}
 	Flowrate2 struct {
 		Classes                  []uint8
