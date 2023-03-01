@@ -30,6 +30,7 @@ type (
 		SteamHumidifier     bool
 		MediaHumidifier     bool
 		Dryer               bool
+		NoHeater            bool
 		SupplyFilterClasses []uint8
 		ExhaustFilterClass  []uint8
 	}
