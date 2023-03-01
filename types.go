@@ -41,7 +41,12 @@ type (
 		MaxInsideNoise              uint64
 		MaxOutsideNoise             uint64
 		SectionList                 RequiredComponents
-		Extra                       struct {
+		HouseingType                struct {
+			Verticel   bool
+			Flat       bool
+			Horisontel bool
+		}
+		Extra struct {
 			HeatedWaterInletTemperature     float64
 			HeatedWaterOutgoingTemperature  float64
 			ChilledWaterInletTemperature    float64
