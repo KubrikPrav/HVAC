@@ -44,6 +44,10 @@ type (
 			OutsideTotal float64
 			BodyTotal    float64
 		}
+		Description []struct {
+			Name  string
+			Value string
+		}
 	}
 
 	FilterPrint struct {
