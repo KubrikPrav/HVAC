@@ -5,51 +5,83 @@ import (
 )
 
 type (
-	UnitPrintout struct {
-		IsHeatedWaterPreHeater    bool
-		IsElectricHeaterPreHeater bool
-		IsHeatedWater             bool
-		IsElectricHeater          bool
-		IsChilledWater            bool
-		IsDirectExpansion         bool
-		IsMediaHumidifier         bool
-		IsSteamHumidifier         bool
-		IsSoundModerator          bool
-		IsSupplyFilter            bool
-		IsExhaustFilter           bool
-		IsThermalWheel            bool
-		IsPlateHeatExchanger      bool
-		IsSupplyBlower            bool
-		IsExhaustBlower           bool
-		Name                      string
-		Plot                      string
-		Drawing                   string
-		Price                     float64
-		HeatRecovery              HeatRecoveryPrint
-		PreHeater                 HeaterPrint
-		Heater                    HeaterPrint
-		Cooler                    HeaterPrint
-		Humidifier                HeaterPrint
-		SoundModerator            SoundModeratorArray
-		SupplyFilter              []FilterPrint
-		SupplyBlower              BlowerResp
-		ExhaustFilter             []FilterPrint
-		ExhaustBlower             BlowerResp
-		Extra                     Extra
-		TotalNoise                struct {
-			Inside       Noise
-			Outside      Noise
-			Body         Noise
-			InsideTotal  float64
-			OutsideTotal float64
-			BodyTotal    float64
-		}
-		Description []struct {
-			Name  string
-			Value string
-		}
-	}
+    UnitPrintout struct {
+        IsHeatedWaterPreHeater    bool
+        IsElectricHeaterPreHeater bool
+        IsHeatedWater             bool
+        IsElectricHeater          bool
+        IsChilledWater            bool
+        IsDirectExpansion         bool
+        IsMediaHumidifier         bool
+        IsSteamHumidifier         bool
+        IsSoundModerator          bool
+        IsSupplyFilter            bool
+        IsExhaustFilter           bool
+        IsThermalWheel            bool
+        IsPlateHeatExchanger      bool
+        IsSupplyBlower            bool
+        IsExhaustBlower           bool
+        Name                      string
+        Plot                      string
+        Drawing                   string
+        Price                     float64
+        Task                      TaskPrint2
+        Result                    ResultPrint2
+        HeatRecovery              HeatRecoveryPrint
+        PreHeater                 HeaterPrint
+        Heater                    HeaterPrint
+        Cooler                    HeaterPrint
+        Humidifier                HeaterPrint
+        SoundModerator            SoundModeratorArray
+        SupplyFilter              []FilterPrint
+        SupplyBlower              BlowerResp
+        ExhaustFilter             []FilterPrint
+        ExhaustBlower             BlowerResp
+        Extra                     Extra
+        TotalNoise                struct {
+            Inside       Noise
+            Outside      Noise
+            Body         Noise
+            InsideTotal  float64
+            OutsideTotal float64
+            BodyTotal    float64
+        }
+        Description []struct {
+            Name  string
+            Value string
+        }
+    }
 
+    TaskPrint2 struct{
+        Summer TaskPrint
+        Winter TaskPrint
+        TSet bool
+        HSet bool
+    }
+    TaskPrint struct{
+        Outdoor PrintAir
+        Indoor PrintAir
+        SupplyTarget PrintAir
+        SupplyFlowrate uint64
+        ExhaustFlowrate uint64
+        SupplyPressure uint64
+        ExhaustPressure uint64
+    }
+
+    ResultPrint2 struct{
+        Summer ResultPrint
+        Winter ResultPrint
+    }
+    ResultPrint struct{
+        Outdoor PrintAir
+        Indoor PrintAir
+        Supply PrintAir
+        Exhaust PrintAir
+        Flowrate uint64
+        ExhaustFlowrate uint64
+        SupplyPressure uint64
+        ExhaustPressure uint64
+    }
 	FilterPrint struct {
 		Class      string
 		SizeAndQty []struct {
