@@ -77,6 +77,8 @@ type (
 		Plot                      string
 		Drawing                   string
 		Price                     float64
+        Task                      UnitTask
+        Result UnitResult2
 		HeatRecovery              HeatRecoveryResult2
 		PreHeater                 HeaterResult2
 		Heater                    HeaterResult2
@@ -97,6 +99,24 @@ type (
 			BodyTotal    float64
 		}
 	}
+
+    UnitResult2 struct{
+        Summer UnitResult
+        Winter UnitResult
+    }
+    UnitResult struct{
+        Outdoor Air
+        Indoor Air
+        Supply Air
+        Exhaust Air
+        SupplyFlowrate uint64
+        ExhaustFlowrate uint64
+        SupplyPressure uint64
+        ExhaustPressure uint64
+        SupplyTotalPressure uint64
+        ExhaustTotalPressure uint64
+    }
+
 	RequestType1 struct {
 		Types map[string]HeaterTask2
 		Extra Extra

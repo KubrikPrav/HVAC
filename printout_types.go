@@ -77,10 +77,12 @@ type (
         Indoor PrintAir
         Supply PrintAir
         Exhaust PrintAir
-        Flowrate uint64
+        SupplyFlowrate uint64
         ExhaustFlowrate uint64
         SupplyPressure uint64
         ExhaustPressure uint64
+        SupplyTotalPressure uint64
+        ExhaustTotalPressure uint64
     }
 	FilterPrint struct {
 		Class      string
@@ -322,52 +324,96 @@ func printFilters(in []FilterDescription2, digits int) (out []FilterPrint) {
 	return
 }
 
+func (s UnitResult) Print(d int)ResultPrint{
+    return ResultPrint{
+        Outdoor:              s.Outdoor.PrintAir(d),
+        Indoor:               s.Indoor.PrintAir(d),
+        Supply:               s.Supply.PrintAir(d),
+        Exhaust:              s.Exhaust.PrintAir(d),
+        SupplyFlowrate:       s.SupplyFlowrate,
+        ExhaustFlowrate:      s.ExhaustFlowrate,
+        SupplyPressure:       s.SupplyPressure,
+        ExhaustPressure:      s.ExhaustPressure,
+        SupplyTotalPressure:  s.SupplyTotalPressure,
+        ExhaustTotalPressure: s.ExhaustTotalPressure,
+    }
+}
+func (s UnitResult2) Print(d int)ResultPrint2{
+    return ResultPrint2{
+        Summer: s.Summer.Print(d),
+        Winter: s.Winter.Print(d),
+    }
+}
+
+func (s SeasonInitData)Print(d int)TaskPrint{
+    return TaskPrint{
+        Outdoor: s.Outdoor.PrintAir(d),
+        Indoor: s.Indoor.PrintAir(d),
+        SupplyTarget: s.SupplyTarget.PrintAir(d),
+        SupplyFlowrate:s.SupplyVolumetricFlowrate,
+        ExhaustFlowrate: s.ExhaustVolumetricFlowrate,
+        SupplyPressure: s.SupplyPressure,
+        ExhaustPressure: s.ExhaustPressure,
+    }
+}
+
+func (s UnitTask)Print(d int)TaskPrint2{
+return TaskPrint2{
+    Summer: s.Summer.Print(d),
+    Winter: s.Winter.Print(d),
+    TSet: s.Summer.SupplyTarget.Temperature!=0 || s.Winter.SupplyTarget.Temperature!=0,
+    HSet: s.Summer.SupplyTarget.Humidity!=0 || s.Winter.SupplyTarget.Humidity!=0,
+}
+}
+
 func (s UnitDescription) Print(digits int) UnitPrintout {
-	return UnitPrintout{
-		IsHeatedWaterPreHeater:    s.IsHeatedWaterPreHeater,
-		IsElectricHeaterPreHeater: s.IsElectricHeaterPreHeater,
-		IsHeatedWater:             s.IsHeatedWater,
-		IsElectricHeater:          s.IsElectricHeater,
-		IsChilledWater:            s.IsChilledWater,
-		IsDirectExpansion:         s.IsDirectExpansion,
-		IsMediaHumidifier:         s.IsMediaHumidifier,
-		IsSteamHumidifier:         s.IsSteamHumidifier,
-		IsSoundModerator:          s.IsSoundModerator,
-		IsSupplyFilter:            s.IsSupplyFilter,
-		IsExhaustFilter:           s.IsExhaustFilter,
-		IsThermalWheel:            s.IsThermalWheel,
-		IsPlateHeatExchanger:      s.IsPlateHeatExchanger,
-		IsSupplyBlower:            s.IsSupplyBlower,
-		IsExhaustBlower:           s.IsExhaustBlower,
-		Name:                      s.Name,
-		Plot:                      s.Plot,
-		Drawing:                   s.Drawing,
-		Price:                     s.Price,
-		HeatRecovery:              s.HeatRecovery.Print(digits),
-		PreHeater:                 s.PreHeater.Print(digits),
-		Heater:                    s.Heater.Print(digits),
-		Cooler:                    s.Cooler.Print(digits),
-		Humidifier:                s.Humidifier.Print(digits),
-		SoundModerator:            s.SoundModerator.Round(digits),
-		SupplyFilter:              printFilters(s.SupplyFilter, digits),
-		SupplyBlower:              s.SupplyBlower,
-		ExhaustFilter:             printFilters(s.ExhaustFilter, digits),
-		ExhaustBlower:             s.ExhaustBlower,
-		Extra:                     s.Extra,
-		TotalNoise: struct {
-			Inside       Noise
-			Outside      Noise
-			Body         Noise
-			InsideTotal  float64
-			OutsideTotal float64
-			BodyTotal    float64
-		}{
-			Inside:       s.TotalNoise.Inside.Round(digits),
-			Outside:      s.TotalNoise.Outside.Round(digits),
-			Body:         s.TotalNoise.Body.Round(digits),
-			InsideTotal:  round(s.TotalNoise.InsideTotal, digits),
-			OutsideTotal: round(s.TotalNoise.OutsideTotal, digits),
-			BodyTotal:    round(s.TotalNoise.BodyTotal, digits),
-		},
-	}
+    return UnitPrintout{
+        IsHeatedWaterPreHeater:    s.IsHeatedWaterPreHeater,
+        IsElectricHeaterPreHeater: s.IsElectricHeaterPreHeater,
+        IsHeatedWater:             s.IsHeatedWater,
+        IsElectricHeater:          s.IsElectricHeater,
+        IsChilledWater:            s.IsChilledWater,
+        IsDirectExpansion:         s.IsDirectExpansion,
+        IsMediaHumidifier:         s.IsMediaHumidifier,
+        IsSteamHumidifier:         s.IsSteamHumidifier,
+        IsSoundModerator:          s.IsSoundModerator,
+        IsSupplyFilter:            s.IsSupplyFilter,
+        IsExhaustFilter:           s.IsExhaustFilter,
+        IsThermalWheel:            s.IsThermalWheel,
+        IsPlateHeatExchanger:      s.IsPlateHeatExchanger,
+        IsSupplyBlower:            s.IsSupplyBlower,
+        IsExhaustBlower:           s.IsExhaustBlower,
+        Name:                      s.Name,
+        Plot:                      s.Plot,
+        Drawing:                   s.Drawing,
+        Price:                     s.Price,
+        Task:                      s.Task.Print(digits),
+        Result:                    s.Result.Print(digits),
+        HeatRecovery:              s.HeatRecovery.Print(digits),
+        PreHeater:                 s.PreHeater.Print(digits),
+        Heater:                    s.Heater.Print(digits),
+        Cooler:                    s.Cooler.Print(digits),
+        Humidifier:                s.Humidifier.Print(digits),
+        SoundModerator:            s.SoundModerator.Round(digits),
+        SupplyFilter:              printFilters(s.SupplyFilter, digits),
+        SupplyBlower:              s.SupplyBlower,
+        ExhaustFilter:             printFilters(s.ExhaustFilter, digits),
+        ExhaustBlower:             s.ExhaustBlower,
+        Extra:                     s.Extra,
+        TotalNoise: struct {
+            Inside       Noise
+            Outside      Noise
+            Body         Noise
+            InsideTotal  float64
+            OutsideTotal float64
+            BodyTotal    float64
+        }{
+            Inside:       s.TotalNoise.Inside.Round(digits),
+            Outside:      s.TotalNoise.Outside.Round(digits),
+            Body:         s.TotalNoise.Body.Round(digits),
+            InsideTotal:  round(s.TotalNoise.InsideTotal, digits),
+            OutsideTotal: round(s.TotalNoise.OutsideTotal, digits),
+            BodyTotal:    round(s.TotalNoise.BodyTotal, digits),
+        },
+    }
 }
