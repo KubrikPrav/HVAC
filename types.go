@@ -106,7 +106,6 @@ type (
 			BodyTotal    float64
 		}
 	}
-
 	UnitSpec struct {
 		Internals PartList
 		Housing   PartList
@@ -116,7 +115,6 @@ type (
 		ShortName string
 		Qty       uint64
 	}
-
 	UnitResult2 struct {
 		Summer UnitResult
 		Winter UnitResult
@@ -133,35 +131,28 @@ type (
 		SupplyTotalPressure  uint64
 		ExhaustTotalPressure uint64
 	}
-
 	RequestType1 struct {
 		Types map[string]HeaterTask2
 		Extra Extra
 	}
 	ResponseType1 map[string]HeaterResult2
-
 	RequestType2  map[string]Flowrate2
 	ResponseType2 map[string][]FilterDescription2
-
 	RequestType3  map[string]BlowerReq
 	ResponseType3 map[string]BlowerResp
-
 	RequestType4  map[string]SoundModeratorTask2
 	ResponseType4 map[string]SoundModeratorArray
-
-	RequestType5 struct {
+	RequestType5  struct {
 		Task  HeatRecoveryTask2
 		Names []string
 	}
-	ResponseType5 map[string]HeatRecoveryResult2
-
+	ResponseType5    map[string]HeatRecoveryResult2
 	HeatRecoveryTask struct {
 		Inside                    Air
 		Outside                   Air
 		SupplyVolumetricFlowrate  uint64
 		ExhaustVolumetricFlowrate uint64
 	}
-
 	HeatRecoveryResult struct {
 		Supply                Air
 		Exhaust               Air
@@ -181,10 +172,10 @@ type (
 	HeatRecoveryResult2 struct {
 		LongName  string
 		ShortName string
+		Length    uint64
 		Summer    HeatRecoveryResult
 		Winter    HeatRecoveryResult
 	}
-
 	HeaterTask2 struct {
 		Name   string
 		Summer HeaterTask
@@ -193,6 +184,7 @@ type (
 	HeaterResult2 struct {
 		LongName  string
 		ShortName string
+		Length    uint64
 		Summer    HeaterResult
 		Winter    HeaterResult
 	}
@@ -202,6 +194,7 @@ type (
 		WinterVolumetricFlowrate float64
 	}
 	FilterDescription2 struct {
+		Length uint64
 		Summer FilterDescription
 		Winter FilterDescription
 	}
@@ -253,7 +246,7 @@ type (
 		MaxCurrent      float64
 		WheelSize       uint64
 		MotorPower      float64
-		Length          int64
+		Length          uint64
 		TooLoud         bool
 		Twin            bool
 	}
@@ -273,7 +266,6 @@ type (
 		WaterPressureDrop       float64
 		LowCapacity             bool
 	}
-
 	SoundModeratorTask2 struct {
 		InsideUpper  SoundModeratorTask
 		InsideLower  SoundModeratorTask
@@ -296,6 +288,7 @@ type (
 		NotRequired bool
 		LongName    string
 		ShortName   string
+		Length      uint64
 		Summer      SoundDutyPoint
 		Winter      SoundDutyPoint
 	}
