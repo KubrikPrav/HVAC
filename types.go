@@ -77,8 +77,8 @@ type (
 		Plot                      string
 		Drawing                   string
 		Price                     float64
-        Task                      UnitTask
-        Result UnitResult2
+		Task                      UnitTask
+		Result                    UnitResult2
 		HeatRecovery              HeatRecoveryResult2
 		PreHeater                 HeaterResult2
 		Heater                    HeaterResult2
@@ -90,6 +90,7 @@ type (
 		ExhaustFilter             []FilterDescription2
 		ExhaustBlower             BlowerResp
 		Extra                     Extra
+		UnitSpec                  UnitSpec
 		TotalNoise                struct {
 			Inside       Noise
 			Outside      Noise
@@ -100,22 +101,32 @@ type (
 		}
 	}
 
-    UnitResult2 struct{
-        Summer UnitResult
-        Winter UnitResult
-    }
-    UnitResult struct{
-        Outdoor Air
-        Indoor Air
-        Supply Air
-        Exhaust Air
-        SupplyFlowrate uint64
-        ExhaustFlowrate uint64
-        SupplyPressure uint64
-        ExhaustPressure uint64
-        SupplyTotalPressure uint64
-        ExhaustTotalPressure uint64
-    }
+	UnitSpec struct {
+		Internals PartList
+		Housing   PartList
+	}
+	PartList []struct {
+		LongName  string
+		ShortName string
+		Qty       uint64
+	}
+
+	UnitResult2 struct {
+		Summer UnitResult
+		Winter UnitResult
+	}
+	UnitResult struct {
+		Outdoor              Air
+		Indoor               Air
+		Supply               Air
+		Exhaust              Air
+		SupplyFlowrate       uint64
+		ExhaustFlowrate      uint64
+		SupplyPressure       uint64
+		ExhaustPressure      uint64
+		SupplyTotalPressure  uint64
+		ExhaustTotalPressure uint64
+	}
 
 	RequestType1 struct {
 		Types map[string]HeaterTask2
@@ -290,3 +301,35 @@ type (
 		Target         float64
 	}
 )
+
+func (s *PartList) Add(LongName string, ShortName string) {
+	for i := 0; i < len(*s); i++ {
+		if (*s)[i].LongName == LongName {
+			val := (*s)[i]
+			val.Qty++
+			(*s)[i] = val
+			return
+		}
+	}
+	val := struct {
+		LongName  string
+		ShortName string
+		Qty       uint64
+	}{
+		LongName:  LongName,
+		ShortName: ShortName,
+		Qty:       1,
+	}
+	*s = append(*s, val)
+}
+
+func (s UnitSpec) Names(LongNames []string) {
+	LongNames = make([]string, len(s.Internals)+len(s.Housing))
+	for i := 0; i < len(s.Internals)+len(s.Housing); i++ {
+		if i < len(s.Housing) {
+			LongNames[i] = s.Housing[i].LongName
+		} else {
+			LongNames[i] = s.Internals[i-len(s.Housing)].LongName
+		}
+	}
+}
