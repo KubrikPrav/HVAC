@@ -5,85 +5,88 @@ import (
 )
 
 type (
-    UnitPrintout struct {
-        IsHeatedWaterPreHeater    bool
-        IsElectricHeaterPreHeater bool
-        IsHeatedWater             bool
-        IsElectricHeater          bool
-        IsChilledWater            bool
-        IsDirectExpansion         bool
-        IsMediaHumidifier         bool
-        IsSteamHumidifier         bool
-        IsSoundModerator          bool
-        IsSupplyFilter            bool
-        IsExhaustFilter           bool
-        IsThermalWheel            bool
-        IsPlateHeatExchanger      bool
-        IsSupplyBlower            bool
-        IsExhaustBlower           bool
-        Name                      string
-        Plot                      string
-        Drawing                   string
-        Price                     float64
-        Task                      TaskPrint2
-        Result                    ResultPrint2
-        HeatRecovery              HeatRecoveryPrint
-        PreHeater                 HeaterPrint
-        Heater                    HeaterPrint
-        Cooler                    HeaterPrint
-        Humidifier                HeaterPrint
-        SoundModerator            SoundModeratorArray
-        SupplyFilter              []FilterPrint
-        SupplyBlower              BlowerResp
-        ExhaustFilter             []FilterPrint
-        ExhaustBlower             BlowerResp
-        Extra                     Extra
-        TotalNoise                struct {
-            Inside       Noise
-            Outside      Noise
-            Body         Noise
-            InsideTotal  float64
-            OutsideTotal float64
-            BodyTotal    float64
-        }
-        Description []struct {
-            Name  string
-            Value string
-        }
-    }
+	UnitPrintout struct {
+		IsHeatedWaterPreHeater    bool
+		IsElectricHeaterPreHeater bool
+		IsHeatedWater             bool
+		IsElectricHeater          bool
+		IsChilledWater            bool
+		IsDirectExpansion         bool
+		IsMediaHumidifier         bool
+		IsSteamHumidifier         bool
+		IsSoundModerator          bool
+		IsSupplyFilter            bool
+		IsExhaustFilter           bool
+		IsThermalWheel            bool
+		IsPlateHeatExchanger      bool
+		IsSupplyBlower            bool
+		IsExhaustBlower           bool
+		IsAutomatics              bool
+		IsOutside                 bool
+		ServiceSide               string
+		Name                      string
+		Plot                      string
+		Drawing                   string
+		Price                     float64
+		Task                      TaskPrint2
+		Result                    ResultPrint2
+		HeatRecovery              HeatRecoveryPrint
+		PreHeater                 HeaterPrint
+		Heater                    HeaterPrint
+		Cooler                    HeaterPrint
+		Humidifier                HeaterPrint
+		SoundModerator            SoundModeratorArray
+		SupplyFilter              []FilterPrint
+		SupplyBlower              BlowerResp
+		ExhaustFilter             []FilterPrint
+		ExhaustBlower             BlowerResp
+		Extra                     Extra
+		TotalNoise                struct {
+			Inside       Noise
+			Outside      Noise
+			Body         Noise
+			InsideTotal  float64
+			OutsideTotal float64
+			BodyTotal    float64
+		}
+		Description []struct {
+			Name  string
+			Value string
+		}
+	}
 
-    TaskPrint2 struct{
-        Summer TaskPrint
-        Winter TaskPrint
-        TSet bool
-        HSet bool
-    }
-    TaskPrint struct{
-        Outdoor PrintAir
-        Indoor PrintAir
-        SupplyTarget PrintAir
-        SupplyFlowrate uint64
-        ExhaustFlowrate uint64
-        SupplyPressure uint64
-        ExhaustPressure uint64
-    }
+	TaskPrint2 struct {
+		Summer TaskPrint
+		Winter TaskPrint
+		TSet   bool
+		HSet   bool
+	}
+	TaskPrint struct {
+		Outdoor         PrintAir
+		Indoor          PrintAir
+		SupplyTarget    PrintAir
+		SupplyFlowrate  uint64
+		ExhaustFlowrate uint64
+		SupplyPressure  uint64
+		ExhaustPressure uint64
+	}
 
-    ResultPrint2 struct{
-        Summer ResultPrint
-        Winter ResultPrint
-    }
-    ResultPrint struct{
-        Outdoor PrintAir
-        Indoor PrintAir
-        Supply PrintAir
-        Exhaust PrintAir
-        SupplyFlowrate uint64
-        ExhaustFlowrate uint64
-        SupplyPressure uint64
-        ExhaustPressure uint64
-        SupplyTotalPressure uint64
-        ExhaustTotalPressure uint64
-    }
+	ResultPrint2 struct {
+		Summer ResultPrint
+		Winter ResultPrint
+	}
+	ResultPrint struct {
+		Outdoor              PrintAir
+		Indoor               PrintAir
+		Supply               PrintAir
+		Exhaust              PrintAir
+		SupplyFlowrate       uint64
+		ExhaustFlowrate      uint64
+		SupplyPressure       uint64
+		ExhaustPressure      uint64
+		SupplyTotalPressure  uint64
+		ExhaustTotalPressure uint64
+	}
 	FilterPrint struct {
 		Class      string
 		SizeAndQty []struct {
@@ -268,7 +271,6 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 		},
 	}
 }
-
 func (s SoundModeratorDescription) Round(digits int) SoundModeratorDescription {
 	return SoundModeratorDescription{
 		NotRequired: s.NotRequired,
@@ -296,7 +298,6 @@ func (s SoundModeratorArray) Round(digits int) SoundModeratorArray {
 		OutsideUpper: s.OutsideUpper.Round(digits),
 	}
 }
-
 func (s FilterDescription2) Print(digits int) FilterPrint {
 	return FilterPrint{
 		Class:      s.Summer.Class,
@@ -323,97 +324,103 @@ func printFilters(in []FilterDescription2, digits int) (out []FilterPrint) {
 	}
 	return
 }
-
-func (s UnitResult) Print(d int)ResultPrint{
-    return ResultPrint{
-        Outdoor:              s.Outdoor.PrintAir(d),
-        Indoor:               s.Indoor.PrintAir(d),
-        Supply:               s.Supply.PrintAir(d),
-        Exhaust:              s.Exhaust.PrintAir(d),
-        SupplyFlowrate:       s.SupplyFlowrate,
-        ExhaustFlowrate:      s.ExhaustFlowrate,
-        SupplyPressure:       s.SupplyPressure,
-        ExhaustPressure:      s.ExhaustPressure,
-        SupplyTotalPressure:  s.SupplyTotalPressure,
-        ExhaustTotalPressure: s.ExhaustTotalPressure,
-    }
+func (s UnitResult) Print(d int) ResultPrint {
+	return ResultPrint{
+		Outdoor:              s.Outdoor.PrintAir(d),
+		Indoor:               s.Indoor.PrintAir(d),
+		Supply:               s.Supply.PrintAir(d),
+		Exhaust:              s.Exhaust.PrintAir(d),
+		SupplyFlowrate:       s.SupplyFlowrate,
+		ExhaustFlowrate:      s.ExhaustFlowrate,
+		SupplyPressure:       s.SupplyPressure,
+		ExhaustPressure:      s.ExhaustPressure,
+		SupplyTotalPressure:  s.SupplyTotalPressure,
+		ExhaustTotalPressure: s.ExhaustTotalPressure,
+	}
 }
-func (s UnitResult2) Print(d int)ResultPrint2{
-    return ResultPrint2{
-        Summer: s.Summer.Print(d),
-        Winter: s.Winter.Print(d),
-    }
+func (s UnitResult2) Print(d int) ResultPrint2 {
+	return ResultPrint2{
+		Summer: s.Summer.Print(d),
+		Winter: s.Winter.Print(d),
+	}
 }
-
-func (s SeasonInitData)Print(d int)TaskPrint{
-    return TaskPrint{
-        Outdoor: s.Outdoor.PrintAir(d),
-        Indoor: s.Indoor.PrintAir(d),
-        SupplyTarget: s.SupplyTarget.PrintAir(d),
-        SupplyFlowrate:s.SupplyVolumetricFlowrate,
-        ExhaustFlowrate: s.ExhaustVolumetricFlowrate,
-        SupplyPressure: s.SupplyPressure,
-        ExhaustPressure: s.ExhaustPressure,
-    }
+func (s SeasonInitData) Print(d int) TaskPrint {
+	return TaskPrint{
+		Outdoor:         s.Outdoor.PrintAir(d),
+		Indoor:          s.Indoor.PrintAir(d),
+		SupplyTarget:    s.SupplyTarget.PrintAir(d),
+		SupplyFlowrate:  s.SupplyVolumetricFlowrate,
+		ExhaustFlowrate: s.ExhaustVolumetricFlowrate,
+		SupplyPressure:  s.SupplyPressure,
+		ExhaustPressure: s.ExhaustPressure,
+	}
 }
-
-func (s UnitTask)Print(d int)TaskPrint2{
-return TaskPrint2{
-    Summer: s.Summer.Print(d),
-    Winter: s.Winter.Print(d),
-    TSet: s.Summer.SupplyTarget.Temperature!=0 || s.Winter.SupplyTarget.Temperature!=0,
-    HSet: s.Summer.SupplyTarget.Humidity!=0 || s.Winter.SupplyTarget.Humidity!=0,
+func (s UnitTask) Print(d int) TaskPrint2 {
+	return TaskPrint2{
+		Summer: s.Summer.Print(d),
+		Winter: s.Winter.Print(d),
+		TSet:   s.Summer.SupplyTarget.Temperature != 0 || s.Winter.SupplyTarget.Temperature != 0,
+		HSet:   s.Summer.SupplyTarget.Humidity != 0 || s.Winter.SupplyTarget.Humidity != 0,
+	}
 }
+func serviceSidePrint(b bool) string {
+	if b {
+		return "Правая"
+	} else {
+		return "Левая"
+	}
 }
-
 func (s UnitDescription) Print(digits int) UnitPrintout {
-    return UnitPrintout{
-        IsHeatedWaterPreHeater:    s.IsHeatedWaterPreHeater,
-        IsElectricHeaterPreHeater: s.IsElectricHeaterPreHeater,
-        IsHeatedWater:             s.IsHeatedWater,
-        IsElectricHeater:          s.IsElectricHeater,
-        IsChilledWater:            s.IsChilledWater,
-        IsDirectExpansion:         s.IsDirectExpansion,
-        IsMediaHumidifier:         s.IsMediaHumidifier,
-        IsSteamHumidifier:         s.IsSteamHumidifier,
-        IsSoundModerator:          s.IsSoundModerator,
-        IsSupplyFilter:            s.IsSupplyFilter,
-        IsExhaustFilter:           s.IsExhaustFilter,
-        IsThermalWheel:            s.IsThermalWheel,
-        IsPlateHeatExchanger:      s.IsPlateHeatExchanger,
-        IsSupplyBlower:            s.IsSupplyBlower,
-        IsExhaustBlower:           s.IsExhaustBlower,
-        Name:                      s.Name,
-        Plot:                      s.Plot,
-        Drawing:                   s.Drawing,
-        Price:                     s.Price,
-        Task:                      s.Task.Print(digits),
-        Result:                    s.Result.Print(digits),
-        HeatRecovery:              s.HeatRecovery.Print(digits),
-        PreHeater:                 s.PreHeater.Print(digits),
-        Heater:                    s.Heater.Print(digits),
-        Cooler:                    s.Cooler.Print(digits),
-        Humidifier:                s.Humidifier.Print(digits),
-        SoundModerator:            s.SoundModerator.Round(digits),
-        SupplyFilter:              printFilters(s.SupplyFilter, digits),
-        SupplyBlower:              s.SupplyBlower,
-        ExhaustFilter:             printFilters(s.ExhaustFilter, digits),
-        ExhaustBlower:             s.ExhaustBlower,
-        Extra:                     s.Extra,
-        TotalNoise: struct {
-            Inside       Noise
-            Outside      Noise
-            Body         Noise
-            InsideTotal  float64
-            OutsideTotal float64
-            BodyTotal    float64
-        }{
-            Inside:       s.TotalNoise.Inside.Round(digits),
-            Outside:      s.TotalNoise.Outside.Round(digits),
-            Body:         s.TotalNoise.Body.Round(digits),
-            InsideTotal:  round(s.TotalNoise.InsideTotal, digits),
-            OutsideTotal: round(s.TotalNoise.OutsideTotal, digits),
-            BodyTotal:    round(s.TotalNoise.BodyTotal, digits),
-        },
-    }
+	return UnitPrintout{
+		IsHeatedWaterPreHeater:    s.IsHeatedWaterPreHeater,
+		IsElectricHeaterPreHeater: s.IsElectricHeaterPreHeater,
+		IsHeatedWater:             s.IsHeatedWater,
+		IsElectricHeater:          s.IsElectricHeater,
+		IsChilledWater:            s.IsChilledWater,
+		IsDirectExpansion:         s.IsDirectExpansion,
+		IsMediaHumidifier:         s.IsMediaHumidifier,
+		IsSteamHumidifier:         s.IsSteamHumidifier,
+		IsSoundModerator:          s.IsSoundModerator,
+		IsSupplyFilter:            s.IsSupplyFilter,
+		IsExhaustFilter:           s.IsExhaustFilter,
+		IsThermalWheel:            s.IsThermalWheel,
+		IsPlateHeatExchanger:      s.IsPlateHeatExchanger,
+		IsSupplyBlower:            s.IsSupplyBlower,
+		IsExhaustBlower:           s.IsExhaustBlower,
+		IsAutomatics:              s.IsAutomatics,
+		IsOutside:                 s.IsOutside,
+		ServiceSide:               serviceSidePrint(s.RightServiceSide),
+		Name:                      s.Name,
+		Plot:                      s.Plot,
+		Drawing:                   s.Drawing,
+		Price:                     s.Price,
+		Task:                      s.Task.Print(digits),
+		Result:                    s.Result.Print(digits),
+		HeatRecovery:              s.HeatRecovery.Print(digits),
+		PreHeater:                 s.PreHeater.Print(digits),
+		Heater:                    s.Heater.Print(digits),
+		Cooler:                    s.Cooler.Print(digits),
+		Humidifier:                s.Humidifier.Print(digits),
+		SoundModerator:            s.SoundModerator.Round(digits),
+		SupplyFilter:              printFilters(s.SupplyFilter, digits),
+		SupplyBlower:              s.SupplyBlower,
+		ExhaustFilter:             printFilters(s.ExhaustFilter, digits),
+		ExhaustBlower:             s.ExhaustBlower,
+		Extra:                     s.Extra,
+		TotalNoise: struct {
+			Inside       Noise
+			Outside      Noise
+			Body         Noise
+			InsideTotal  float64
+			OutsideTotal float64
+			BodyTotal    float64
+		}{
+			Inside:       s.TotalNoise.Inside.Round(digits),
+			Outside:      s.TotalNoise.Outside.Round(digits),
+			Body:         s.TotalNoise.Body.Round(digits),
+			InsideTotal:  round(s.TotalNoise.InsideTotal, digits),
+			OutsideTotal: round(s.TotalNoise.OutsideTotal, digits),
+			BodyTotal:    round(s.TotalNoise.BodyTotal, digits),
+		},
+	}
 }
