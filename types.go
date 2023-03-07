@@ -41,10 +41,13 @@ type (
 		MaxInsideNoise              uint64
 		MaxOutsideNoise             uint64
 		SectionList                 RequiredComponents
-		HouseingType                struct {
-			Verticel   bool
+		ServiceSide                 string
+		IsAutomatics                bool
+		IsOutside                   bool
+		HousingType                 struct {
+			Vertical   bool
 			Flat       bool
-			Horisontel bool
+			Horizontal bool
 		}
 		Extra struct {
 			HeatedWaterInletTemperature     float64
@@ -73,6 +76,9 @@ type (
 		IsPlateHeatExchanger      bool
 		IsSupplyBlower            bool
 		IsExhaustBlower           bool
+		RightServiceSide          bool
+		IsAutomatics              bool
+		IsOutside                 bool
 		Name                      string
 		Plot                      string
 		Drawing                   string
