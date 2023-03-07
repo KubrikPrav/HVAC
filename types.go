@@ -300,6 +300,19 @@ type (
 		WinterFlowrate float64
 		Target         float64
 	}
+	DrawingTask struct {
+		High  []string // List of high sections. 0 is left, len-1 is right
+		Upper []string // List of upper sections. 0 is left, len-1 is right
+		Lower []string // List of lower sections. 0 is left, len-1 is right
+	}
+	DrawingResult struct {
+		Picture     string // Here should be a picture in svg format
+		TotalLength string // <Sum of all High sections length> + Max(<Sum of all Lower sections length>, <Sum of all Upper sections length>)
+		TotalHeight string
+		TotalWidth  string
+	}
+	DrawingRequest  map[string]DrawingTask
+	DrawingResponse map[string]DrawingResult
 )
 
 func (s *PartList) Add(LongName string, ShortName string, qty uint64) {
