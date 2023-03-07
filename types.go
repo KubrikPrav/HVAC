@@ -307,6 +307,7 @@ type (
 		Target         float64
 	}
 	DrawingTask struct {
+		RtoL  bool
 		High  []string // List of high sections. 0 is left, len-1 is right
 		Upper []string // List of upper sections. 0 is left, len-1 is right
 		Lower []string // List of lower sections. 0 is left, len-1 is right
