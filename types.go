@@ -302,11 +302,11 @@ type (
 	}
 )
 
-func (s *PartList) Add(LongName string, ShortName string) {
+func (s *PartList) Add(LongName string, ShortName string, qty uint64) {
 	for i := 0; i < len(*s); i++ {
 		if (*s)[i].LongName == LongName {
 			val := (*s)[i]
-			val.Qty++
+			val.Qty += qty
 			(*s)[i] = val
 			return
 		}
@@ -318,7 +318,7 @@ func (s *PartList) Add(LongName string, ShortName string) {
 	}{
 		LongName:  LongName,
 		ShortName: ShortName,
-		Qty:       1,
+		Qty:       qty,
 	}
 	*s = append(*s, val)
 }
