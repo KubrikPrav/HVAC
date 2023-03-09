@@ -300,8 +300,8 @@ func (s SoundModeratorArray) Round(digits int) SoundModeratorArray {
 }
 func (s FilterDescription2) Print(digits int) FilterPrint {
 	return FilterPrint{
-		Class:      s.Summer.Class,
-		SizeAndQty: s.Summer.SizeAndQty,
+		Class:      s.Class,
+		SizeAndQty: s.SizeAndQty,
 		Summer: struct {
 			Flowrate     float64
 			PressureDrop float64
