@@ -312,9 +312,9 @@ type (
 	}
 	DrawingResult struct {
 		Picture     string // Here should be a picture in svg format
-		TotalLength string // <Sum of all High sections length> + Max(<Sum of all Lower sections length>, <Sum of all Upper sections length>)
-		TotalHeight string
-		TotalWidth  string
+		TotalLength uint64 // <Sum of all High sections length> + Max(<Sum of all Lower sections length>, <Sum of all Upper sections length>)
+		TotalHeight uint64
+		TotalWidth  uint64
 	}
 	DrawingRequest  map[string]DrawingTask
 	DrawingResponse map[string]DrawingResult
