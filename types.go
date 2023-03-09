@@ -105,6 +105,11 @@ type (
 			OutsideTotal float64
 			BodyTotal    float64
 		}
+		Dimensions struct {
+			Height uint64
+			Width  uint64
+			Length uint64
+		}
 	}
 	UnitSpec struct {
 		Internals PartList
