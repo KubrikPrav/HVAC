@@ -189,23 +189,23 @@ type (
 		Winter    HeaterResult
 	}
 	Flowrate2 struct {
-		Classes                  []uint8
+		Classes                  []string
 		SummerVolumetricFlowrate float64
 		WinterVolumetricFlowrate float64
 	}
 	FilterDescription2 struct {
-		Length uint64
+		Length     uint64
+		Class      string
+		SizeAndQty []struct {
+			Size string
+			Qty  uint64
+		}
 		Summer FilterDescription
 		Winter FilterDescription
 	}
 	FilterDescription struct {
 		Flowrate     float64
 		PressureDrop float64
-		Class        string
-		SizeAndQty   []struct {
-			Size string
-			Qty  uint64
-		}
 	}
 	BlowerReq struct {
 		Summer           BlowerOperatingPoint
