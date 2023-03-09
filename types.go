@@ -31,8 +31,8 @@ type (
 		MediaHumidifier     bool
 		Dryer               bool
 		NoHeater            bool
-		SupplyFilterClasses []uint8
-		ExhaustFilterClass  []uint8
+		SupplyFilterClasses []string
+		ExhaustFilterClass  []string
 	}
 	UnitTask struct {
 		Summer                      SeasonInitData
