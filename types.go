@@ -155,6 +155,7 @@ type (
 	HeatRecoveryTask struct {
 		Inside                    Air
 		Outside                   Air
+		SupplyTarget              Air
 		SupplyVolumetricFlowrate  uint64
 		ExhaustVolumetricFlowrate uint64
 	}
