@@ -28,7 +28,6 @@ const (
 	AirMolarMass              = 28.98            // g/mol
 	CelsiusToKelvinDifference = 273.15           // K or ºC
 	MolarGasConstant          = 8.31446261815324 // J/K mol
-	WaterDensity              = 997              // kg/m3
 	WaterMolarMass            = 18.01528         // mol
 	DryAirHeatCapacity        = 1.007            // kJ/kg K
 	WaterSteamHeatCapacity    = 2.0784           // kJ/kg K
@@ -42,7 +41,7 @@ func CoolingCondensationFlowrate[T anyFloat](InletHumidity T, OutgoingTemperatur
 	if water_mass_flowrate < 0 {
 		water_mass_flowrate = 0
 	}
-	water_volumetric_flowrate := 1000 * water_mass_flowrate / (WaterDensity)
+	water_volumetric_flowrate := 1000 * water_mass_flowrate / (WaterDensity(OutgoingTemperature))
 	return water_mass_flowrate, water_volumetric_flowrate
 }
 
@@ -98,7 +97,7 @@ func AirHeatOutgoingTemperature[T anyFloat](HeatingPower /* kW */ T, VolumetricF
 // InletTemperature - inlet water temperature
 // OutgoingTemperature - outgoing water temperature
 func WaterHeatPower(InletTemperature /* ºC */ float64, OutgoingTemperature /* ºC */ float64, VolumetricFlowrate /* dm3/h */ float64) float64 /* kW */ {
-	return float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * VolumetricFlowrate * WaterDensity * WaterHeatCapacity / (SecondsInHour * 1000)
+	return float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000)
 }
 
 // Returns the temperature difference of the in- and outgoing water flow after it has heated/cooled the air
@@ -106,7 +105,7 @@ func WaterHeatPower(InletTemperature /* ºC */ float64, OutgoingTemperature /* �
 // Q - water volumetric flowrate
 // InletTemperature - inlet water temperature
 func WaterHeatTemperature(HeatingPower /* kW */ float64, VolumetricFlowrate /* dm3/h */ float64, InletTemperature /* ºC */ float64) float64 /* ºC */ {
-	return HeatingPower / (VolumetricFlowrate * WaterDensity * WaterHeatCapacity / (SecondsInHour * 1000))
+	return HeatingPower / (VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000))
 }
 
 // Returns the volumetric flowrate required to produce selected power
@@ -114,5 +113,11 @@ func WaterHeatTemperature(HeatingPower /* kW */ float64, VolumetricFlowrate /* d
 // InletTemperature - inlet water temperature
 // OutgoingTemperature - outgoing water temperature
 func WaterHeatVolumetricFlowRate(HeatingPower /* kW */ float64, InletTemperature /* ºC */ float64, OutgoingTemperature /* ºC */ float64) float64 /* dm3/h */ {
-	return HeatingPower / (float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * WaterDensity * WaterHeatCapacity / (SecondsInHour * 1000))
+	return HeatingPower / (float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000))
+}
+
+func WaterDensity[T anyFloat](t T) T {
+	x := float64(t)
+	return T(1000 * (0.999922 + 0.0000475377*x - 7.34753*math.Pow10(-6)*math.Pow(x, 2) + 3.92894*math.Pow10(-8)*math.Pow(x, 3) - 1.2144*math.Pow10(-10)*math.Pow(x, 4)))
+
 }
