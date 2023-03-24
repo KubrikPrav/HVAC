@@ -31,7 +31,6 @@ const (
 	WaterMolarMass            = 18.01528         // mol
 	DryAirHeatCapacity        = 1.007            // kJ/kg K
 	WaterSteamHeatCapacity    = 2.0784           // kJ/kg K
-	WaterHeatCapacity         = 4.1806           // kJ/kg K
 	SecondsInHour             = 3600             // s
 )
 
@@ -97,7 +96,7 @@ func AirHeatOutgoingTemperature[T anyFloat](HeatingPower /* kW */ T, VolumetricF
 // InletTemperature - inlet water temperature
 // OutgoingTemperature - outgoing water temperature
 func WaterHeatPower(InletTemperature /* ºC */ float64, OutgoingTemperature /* ºC */ float64, VolumetricFlowrate /* dm3/h */ float64) float64 /* kW */ {
-	return float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000)
+	return float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity(InletTemperature) / (SecondsInHour * 1000)
 }
 
 // Returns the temperature difference of the in- and outgoing water flow after it has heated/cooled the air
@@ -105,7 +104,7 @@ func WaterHeatPower(InletTemperature /* ºC */ float64, OutgoingTemperature /* �
 // Q - water volumetric flowrate
 // InletTemperature - inlet water temperature
 func WaterHeatTemperature(HeatingPower /* kW */ float64, VolumetricFlowrate /* dm3/h */ float64, InletTemperature /* ºC */ float64) float64 /* ºC */ {
-	return HeatingPower / (VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000))
+	return HeatingPower / (VolumetricFlowrate * WaterDensity(InletTemperature) * WaterHeatCapacity(InletTemperature) / (SecondsInHour * 1000))
 }
 
 // Returns the volumetric flowrate required to produce selected power
@@ -113,11 +112,16 @@ func WaterHeatTemperature(HeatingPower /* kW */ float64, VolumetricFlowrate /* d
 // InletTemperature - inlet water temperature
 // OutgoingTemperature - outgoing water temperature
 func WaterHeatVolumetricFlowRate(HeatingPower /* kW */ float64, InletTemperature /* ºC */ float64, OutgoingTemperature /* ºC */ float64) float64 /* dm3/h */ {
-	return HeatingPower / (float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * WaterDensity(InletTemperature) * WaterHeatCapacity / (SecondsInHour * 1000))
+	return HeatingPower / (float64(math.Abs(float64(OutgoingTemperature-InletTemperature))) * WaterDensity(InletTemperature) * WaterHeatCapacity(InletTemperature) / (SecondsInHour * 1000))
 }
 
 func WaterDensity[T anyFloat](t T) T {
 	x := float64(t)
 	return T(1000 * (0.999922 + 0.0000475377*x - 7.34753*math.Pow10(-6)*math.Pow(x, 2) + 3.92894*math.Pow10(-8)*math.Pow(x, 3) - 1.2144*math.Pow10(-10)*math.Pow(x, 4)))
+}
 
+func WaterHeatCapacity[T anyFloat](t T) T {
+	x := float64(t)
+	y := 4.21701568841111 - 0.007849993116176771*x + 0.0010067730629546086*math.Pow(x, 2) - 0.00006957457567073951*math.Pow(x, 3) + 2.605607116793847*math.Pow10(-6)*math.Pow(x, 4) - 5.609144300760924*math.Pow10(-8)*math.Pow(x, 5) + 7.141795677520566*math.Pow10(-10)*math.Pow(x, 6) - 5.286838922592877*math.Pow10(-12)*math.Pow(x, 7) + 2.0881591874928128*math.Pow10(-14)*math.Pow(x, 8) - 3.366302230773775*math.Pow10(-17)*math.Pow(x, 9)
+	return T(y)
 }
