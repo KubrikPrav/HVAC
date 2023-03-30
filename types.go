@@ -61,6 +61,7 @@ type (
 		}
 	}
 	UnitDescription struct {
+		NOk                       bool
 		IsHeatedWaterPreHeater    bool
 		IsElectricHeaterPreHeater bool
 		IsHeatedWater             bool

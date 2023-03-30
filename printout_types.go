@@ -6,6 +6,7 @@ import (
 
 type (
 	UnitPrintout struct {
+		NOk                       bool
 		IsHeatedWaterPreHeater    bool
 		IsElectricHeaterPreHeater bool
 		IsHeatedWater             bool
@@ -372,6 +373,7 @@ func serviceSidePrint(b bool) string {
 }
 func (s UnitDescription) Print(digits int) UnitPrintout {
 	return UnitPrintout{
+		NOk:                       s.NOk,
 		IsHeatedWaterPreHeater:    s.IsHeatedWaterPreHeater,
 		IsElectricHeaterPreHeater: s.IsElectricHeaterPreHeater,
 		IsHeatedWater:             s.IsHeatedWater,
