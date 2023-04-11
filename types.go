@@ -98,15 +98,8 @@ type (
 		ExhaustBlower             BlowerResp
 		Extra                     Extra
 		UnitSpec                  UnitSpec
-		TotalNoise                struct {
-			Inside       Noise
-			Outside      Noise
-			Body         Noise
-			InsideTotal  float64
-			OutsideTotal float64
-			BodyTotal    float64
-		}
-		Dimensions struct {
+		TotalNoise                NoiseResponse1
+		Dimensions                struct {
 			Height uint64
 			Width  uint64
 			Length uint64
@@ -320,6 +313,35 @@ type (
 	}
 	DrawingRequest  map[string]DrawingTask
 	DrawingResponse map[string]DrawingResult
+)
+
+// Noise Counter
+type (
+	NoiseRequest  map[string]NoiseRequest1
+	NoiseRequest1 struct {
+		UnitSeries string
+		Summer     struct {
+			SupplyVolumetricFlowrate  float64
+			ExhaustVolumetricFlowrate float64
+			SupplyTotalPressure       float64
+			ExhaustTotalPressure      float64
+		}
+		Winter struct {
+			SupplyVolumetricFlowrate  float64
+			ExhaustVolumetricFlowrate float64
+			SupplyTotalPressure       float64
+			ExhaustTotalPressure      float64
+		}
+	}
+	NoiseResponse  map[string]NoiseResponse1
+	NoiseResponse1 struct {
+		ODA  Noise
+		SUP  Noise
+		ETA  Noise
+		EHA  Noise
+		Body Noise
+		Room Noise
+	}
 )
 
 func (s *PartList) Add(LongName string, ShortName string, qty uint64) {
