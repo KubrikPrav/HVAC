@@ -403,12 +403,12 @@ func (s UnitDescription) Print(digits int) UnitPrintout {
 		ExhaustBlower:             s.ExhaustBlower,
 		Extra:                     s.Extra,
 		TotalNoise: NoiseResponse1{
-			ODA:  s.TotalNoise.ODA.Round(digits),
-			SUP:  s.TotalNoise.SUP.Round(digits),
-			ETA:  s.TotalNoise.ETA.Round(digits),
-			EHA:  s.TotalNoise.EHA.Round(digits),
-			Body: s.TotalNoise.Body.Round(digits),
-			Room: s.TotalNoise.Room.Round(digits),
+			ODA:  s.TotalNoise.ODA.Round(0),
+			SUP:  s.TotalNoise.SUP.Round(0),
+			ETA:  s.TotalNoise.ETA.Round(0),
+			EHA:  s.TotalNoise.EHA.Round(0),
+			Body: s.TotalNoise.Body.Round(0),
+			Room: s.TotalNoise.Room.Round(0),
 		},
 	}
 }
