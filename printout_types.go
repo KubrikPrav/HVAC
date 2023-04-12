@@ -110,6 +110,7 @@ type (
 			ExhaustPressureDrop   float64
 			TemperatureEfficiency float64
 			HumidityEfficiency    float64
+			HeatRecovery          float64
 		}
 		Winter struct {
 			Used                  bool
@@ -121,6 +122,7 @@ type (
 			ExhaustPressureDrop   float64
 			TemperatureEfficiency float64
 			HumidityEfficiency    float64
+			HeatRecovery          float64
 		}
 	}
 	HeaterPrint struct {
@@ -231,6 +233,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			ExhaustPressureDrop   float64
 			TemperatureEfficiency float64
 			HumidityEfficiency    float64
+			HeatRecovery          float64
 		}{
 			Used:                  s.Summer.Supply != s.Summer.Outside,
 			Supply:                s.Summer.Supply.PrintAir(digits),
@@ -241,6 +244,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			ExhaustPressureDrop:   round(s.Summer.ExhaustPressureDrop, digits),
 			TemperatureEfficiency: round(s.Summer.TemperatureEfficiency, digits),
 			HumidityEfficiency:    round(s.Summer.HumidityEfficiency, digits),
+			HeatRecovery:          round(s.Summer.HeatRecovery, digits),
 		},
 		Winter: struct {
 			Used                  bool
@@ -252,6 +256,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			ExhaustPressureDrop   float64
 			TemperatureEfficiency float64
 			HumidityEfficiency    float64
+			HeatRecovery          float64
 		}{
 			Used:                  s.Winter.Supply != s.Winter.Outside,
 			Supply:                s.Winter.Supply.PrintAir(digits),
@@ -262,6 +267,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			ExhaustPressureDrop:   round(s.Winter.ExhaustPressureDrop, digits),
 			TemperatureEfficiency: round(s.Winter.TemperatureEfficiency, digits),
 			HumidityEfficiency:    round(s.Winter.HumidityEfficiency, digits),
+			HeatRecovery:          round(s.Summer.HeatRecovery, digits),
 		},
 	}
 }

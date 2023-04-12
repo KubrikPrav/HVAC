@@ -161,6 +161,7 @@ type (
 		PreHeaterPwr          float64
 		SupplyPressureDrop    float64
 		ExhaustPressureDrop   float64
+		HeatRecovery          float64
 		TemperatureEfficiency float64
 		HumidityEfficiency    float64
 		Freeze                bool
