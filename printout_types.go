@@ -267,7 +267,7 @@ func (s HeatRecoveryResult2) Print(digits int) HeatRecoveryPrint {
 			ExhaustPressureDrop:   round(s.Winter.ExhaustPressureDrop, digits),
 			TemperatureEfficiency: round(s.Winter.TemperatureEfficiency, digits),
 			HumidityEfficiency:    round(s.Winter.HumidityEfficiency, digits),
-			HeatRecovery:          round(s.Summer.HeatRecovery, digits),
+			HeatRecovery:          round(s.Winter.HeatRecovery, digits),
 		},
 	}
 }
