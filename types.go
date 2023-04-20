@@ -209,6 +209,7 @@ type (
 		PressureDrop float64
 	}
 	BlowerReq struct {
+		Name             string
 		Summer           BlowerOperatingPoint
 		Winter           BlowerOperatingPoint
 		EfficiencyClass  string
@@ -219,27 +220,14 @@ type (
 		Flowrate uint64
 		Pressure uint64
 	}
+	Plot struct {
+		Flowrate []float64
+		Pressure []float64
+	}
 	BlowerResp struct {
-		Summer struct {
-			OperatingPoint BlowerOperatingPoint
-			InletNoise     Noise
-			OutgoingNoise  Noise
-			Efficiency     float64
-			ConsumingPower float64
-			Speed          float64
-		}
-		Winter struct {
-			OperatingPoint BlowerOperatingPoint
-			InletNoise     Noise
-			OutgoingNoise  Noise
-			Efficiency     float64
-			ConsumingPower float64
-			Speed          float64
-		}
-		Plot struct {
-			Flowrate []float64
-			Pressure []float64
-		}
+		Summer          BlowerResp1
+		Winter          BlowerResp1
+		Plot            Plot
 		LongName        string
 		ShortName       string
 		Voltage         string
@@ -250,6 +238,15 @@ type (
 		Length          uint64
 		TooLoud         bool
 		Twin            bool
+	}
+	BlowerResp1 struct {
+		OperatingPoint  BlowerOperatingPoint
+		InletNoise      Noise
+		OutgoingNoise   Noise
+		DynamicPressure float64
+		Efficiency      float64
+		ConsumingPower  float64
+		Speed           float64
 	}
 	HeaterTask struct {
 		Inlet              Air
