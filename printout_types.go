@@ -43,6 +43,10 @@ type (
 		ExhaustBlower             BlowerResp
 		Extra                     Extra
 		TotalNoise                NoiseResponse1
+		Zakaz	string
+		Proekt string
+		DataSozdan string
+		Podgotov string
 		Description               []struct {
 			Name  string
 			Value string
